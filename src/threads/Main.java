@@ -26,6 +26,11 @@ public class Main {
          * threadImpar.start();
          */
 
+        /*
+         * 10 - Pronto Socorro
+         * 
+         */
+
         ProntoSocorro prontoSocorro = new ProntoSocorro();
 
         Thread medico1 = new Thread(new Medico("Dr. Carlos", prontoSocorro));
@@ -52,6 +57,6 @@ public class Main {
             Thread.currentThread().interrupt();
         }
 
-        System.out.println("🏥 Pronto socorro fechou, todos os pacientes foram atendidos!");
+        System.out.println("Pronto socorro fechou, todos os pacientes foram atendidos!");
     }
 }
