@@ -1,3 +1,5 @@
+package prioridade;
+
 public class BaixaPrioridade extends Thread {
     public void run() {
         setPriority(1);

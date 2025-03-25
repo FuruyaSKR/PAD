@@ -1,5 +1,6 @@
-public class Main {
+package prioridade;
 
+public class Main {
     public static void main(String[] args) {
         /*
          * Alta Prioriade Example

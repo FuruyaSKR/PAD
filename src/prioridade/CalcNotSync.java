@@ -1,3 +1,5 @@
+package prioridade;
+
 public class CalcNotSync implements Runnable {
 
     private int[] vet;

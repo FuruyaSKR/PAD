@@ -1,3 +1,5 @@
+package threads;
+
 public class Paciente {
     private final int id;
 

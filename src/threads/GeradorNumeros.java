@@ -1,3 +1,5 @@
+package threads;
+
 import java.util.Random;
 
 public class GeradorNumeros {
