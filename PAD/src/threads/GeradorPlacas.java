@@ -25,7 +25,7 @@ public class GeradorPlacas implements Runnable {
         for (int i = 0; i < quantidade; i++) {
             System.out.println("Placa Gerada: " + gerarPlaca());
             try {
-                Thread.sleep(500); // Simula um pequeno atraso na geração
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.out.println("Thread interrompida!");

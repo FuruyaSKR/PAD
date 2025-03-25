@@ -1,5 +1,3 @@
-package prioridade;
-
 public class CalcNotSync_Calc {
     private int soma;
 

@@ -1,5 +1,3 @@
-package prioridade;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -19,6 +17,5 @@ public class Main {
         int[] v = { 1, 2, 3 };
         CalcNotSync c1 = new CalcNotSync("T1", v);
         CalcNotSync c2 = new CalcNotSync("T2", v);
-
     }
 }
