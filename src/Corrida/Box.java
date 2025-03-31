@@ -1,78 +1,45 @@
 package Corrida;
 
-import java.util.*;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-
 public class Box implements Runnable {
+    private final Carro carro;
 
-    private final int LIMITE_VELOCIDADE = 60;
-    private final BlockingQueue<Carro> filaCarros = new LinkedBlockingQueue<>();
-
-    private final List<String> carrosEntraram = Collections.synchronizedList(new ArrayList<>());
-    private final List<String> carrosPenalizados = Collections.synchronizedList(new ArrayList<>());
-
-    private volatile boolean ativo = true;
-
-    public void solicitarEntrada(Carro carro) {
-        try {
-            filaCarros.put(carro);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-    }
-
-    public int getLimiteVelocidade() {
-        return LIMITE_VELOCIDADE;
-    }
-
-    public void encerrar() {
-        ativo = false;
+    public Box(Carro carro) {
+        this.carro = carro;
     }
 
     @Override
     public void run() {
-        while (ativo || !filaCarros.isEmpty()) {
-            try {
-                Carro carro = filaCarros.take();
-                processarCarro(carro);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-        System.out.println("Box terminou o atendimento.");
-    }
+        int velocidade = carro.getVelocidadeAtual();
+        System.out.println(carro.getNome() + " Reduzindo a velocidade para o box: " + velocidade + " km/h.");
 
-    private void processarCarro(Carro carro) {
-        System.out.println(carro.getNome() + " entrou no box.");
+        while (velocidade > 60) {
+            velocidade -= 10 + carro.getRandom().nextInt(4);
+            if (velocidade < 60)
 
-        carrosEntraram.add(carro.getNome());
-
-        if (carro.getVelocidadeAtual() > LIMITE_VELOCIDADE) {
-            carrosPenalizados.add(carro.getNome());
-            System.out.println(carro.getNome() + " penalizado por excesso de velocidade: "
-                    + String.format("%.1f", carro.getVelocidadeAtual()) + " km/h");
-            dormir(2000);
+                carro.setVelocidadeAtual(velocidade);
+            pausa(500);
         }
 
-        dormir(1800);
+        System.out.println(carro.getNome() + " entrou no box com velocidade de " + velocidade + " km/h.");
 
+        if (velocidade > 60) {
+            penalidade();
+        }
+
+        pausa(2000);
         System.out.println(carro.getNome() + " saiu do box.");
     }
 
-    private void dormir(int millis) {
+    private void penalidade() {
+        carro.setPenalizado(true);
+        System.out.println(carro.getNome() + " foi penalizado por entrar acima de 60 km/h!");
+    }
+
+    private void pausa(int ms) {
         try {
-            Thread.sleep(millis);
+            Thread.sleep(ms);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-    }
-
-    public List<String> getCarrosEntraram() {
-        return carrosEntraram;
-    }
-
-    public List<String> getCarrosPenalizados() {
-        return carrosPenalizados;
     }
 }

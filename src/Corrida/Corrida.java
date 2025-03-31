@@ -1,42 +1,63 @@
 package Corrida;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Corrida {
-    private static final int TOTAL_VOLTA = 5;
+
     private static final int NUM_CARROS = 5;
+    private static int numVoltas = 5;
 
     public static void main(String[] args) {
         SafetyCar safetyCar = new SafetyCar();
-        Box box = new Box();
         List<Carro> carros = new ArrayList<>();
+        List<String> ordemChegada = Collections.synchronizedList(new ArrayList<>());
 
-        // Criando os carros
+        System.out.println("Corrida iniciada com " + NUM_CARROS + " carros!");
+
         for (int i = 1; i <= NUM_CARROS; i++) {
-            carros.add(new Carro("Carro #" + i, box, safetyCar));
+            carros.add(new Carro("Carro #" + i, safetyCar));
         }
 
-        System.out.println("🏁 Corrida iniciada com " + NUM_CARROS + " carros!");
+        boolean safetyCarAtivado = false;
 
-        // Loop de voltas
-        for (int volta = 1; volta <= TOTAL_VOLTA; volta++) {
-            System.out.println("\n🔄 Iniciando volta " + volta);
+        for (int voltaGlobal = 1; voltaGlobal <= numVoltas; voltaGlobal++) {
+            System.out.println("\nVolta " + voltaGlobal + " iniciada!");
 
-            // Safety Car entra na volta 3
-            if (volta == 3) {
-                safetyCar.entrarEmAcao(7000); // Ativo por 7 segundos
+            List<Thread> threadsVolta = new ArrayList<>();
+            List<Carro> abandonosNestaVolta = Collections.synchronizedList(new ArrayList<>());
+
+            for (Carro carro : carros) {
+                Thread t = new Thread(() -> {
+                    if (carro.isCorrendo()) {
+                        boolean abandonouAntes = carro.isAbandonou();
+                        carro.executarVolta();
+                        if (!abandonouAntes && carro.isAbandonou()) {
+                            abandonosNestaVolta.add(carro);
+                        }
+                    }
+                });
+                threadsVolta.add(t);
+                t.start();
             }
 
-            // Cada carro realiza sua ação da volta (sincronizado por volta)
-            for (Carro c : carros) {
-                if (c.isAtivo()) {
-                    c.correr();
+            for (Thread t : threadsVolta) {
+                try {
+                    t.join();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
                 }
             }
 
-            // Tempo entre voltas (só para espaçar prints)
+            if (!safetyCarAtivado && !abandonosNestaVolta.isEmpty()) {
+                safetyCarAtivado = true;
+                safetyCar.ativarPorTempo(8000);
+
+                if (voltaGlobal == numVoltas) {
+                    System.out.println("Safety Car ativado na última volta! Adicionando uma volta extra.");
+                    numVoltas++;
+                }
+            }
+
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -44,29 +65,15 @@ public class Corrida {
             }
         }
 
-        // Finaliza os carros restantes
-        for (Carro c : carros) {
-            if (!c.isAbandonou()) {
-                c.finalizar();
+        for (Carro carro : carros) {
+            if (carro.isCorrendo()) {
+                ordemChegada.add(carro.getNome());
             }
         }
 
-        System.out.println("\n🏁 Corrida encerrada! Resultados:\n");
-
-        // Mostrar carros que completaram
-        carros.stream()
-                .filter(Carro::isFinalizou)
-                .sorted(Comparator.comparingDouble(Carro::getVelocidadeAtual).reversed())
-                .forEach(c -> {
-                    System.out.println("✅ " + c.getNome() + " terminou a corrida."
-                            + (c.isPenalizado() ? " (Com penalidade)" : ""));
-                });
-
-        // Mostrar abandonos
-        carros.stream()
-                .filter(Carro::isAbandonou)
-                .forEach(c -> System.out.println("❌ " + c.getNome() + " abandonou a corrida."));
-
-        System.out.println("\n🏆 Fim da simulação!");
+        System.out.println("\nOrdem de chegada:");
+        for (int i = 0; i < ordemChegada.size(); i++) {
+            System.out.println((i + 1) + "º - " + ordemChegada.get(i));
+        }
     }
 }
