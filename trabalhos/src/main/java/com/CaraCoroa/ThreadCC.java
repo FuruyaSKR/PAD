@@ -1,4 +1,4 @@
-package CaraCoroa;
+package com.CaraCoroa;
 
 public class ThreadCC implements Runnable {
     CaraCoroa cc;

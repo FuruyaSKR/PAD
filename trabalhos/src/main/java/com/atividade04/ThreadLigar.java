@@ -1,4 +1,4 @@
-package atividade04;
+package com.atividade04;
 
 class ThreadLigar extends Thread {
     private final Caldeira caldeira;

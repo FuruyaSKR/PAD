@@ -1,4 +1,4 @@
-package threads;
+package com.aulas.threads;
 
 public class Main {
     public static void main(String[] args) {

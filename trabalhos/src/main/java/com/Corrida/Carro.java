@@ -1,4 +1,4 @@
-package Corrida;
+package com.Corrida;
 
 import java.util.Random;
 

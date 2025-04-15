@@ -1,4 +1,4 @@
-package Corrida;
+package com.Corrida;
 
 public class Box implements Runnable {
     private final Carro carro;

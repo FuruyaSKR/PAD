@@ -1,4 +1,4 @@
-package Notify;
+package com.aulas.Notify;
 
 public class Waiter implements Runnable {
     private Message msg;

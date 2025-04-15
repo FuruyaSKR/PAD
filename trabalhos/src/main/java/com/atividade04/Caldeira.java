@@ -1,4 +1,4 @@
-package atividade04;
+package com.atividade04;
 
 import java.util.Random;
 

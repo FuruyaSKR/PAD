@@ -1,4 +1,4 @@
-package threads;
+package com.aulas.threads;
 
 public class Paciente {
     private final int id;

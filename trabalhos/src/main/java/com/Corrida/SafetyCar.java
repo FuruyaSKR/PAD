@@ -1,4 +1,4 @@
-package Corrida;
+package com.Corrida;
 
 public class SafetyCar {
     private volatile boolean ativo = false;

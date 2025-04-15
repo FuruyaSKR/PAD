@@ -1,4 +1,4 @@
-package atividade04;
+package com.atividade04;
 
 class ThreadAlimentar extends Thread {
     private final Caldeira caldeira;

@@ -1,4 +1,4 @@
-package Notify;
+package com.aulas.Notify;
 
 public class WaitNotifyTest {
     public static void main(String[] args) {

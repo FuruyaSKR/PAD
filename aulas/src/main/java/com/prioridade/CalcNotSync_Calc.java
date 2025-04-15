@@ -1,4 +1,4 @@
-package prioridade;
+package com.aulas.prioridade;
 
 public class CalcNotSync_Calc {
     private int soma;
