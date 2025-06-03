@@ -1,4 +1,4 @@
-package com.aulas.banheiro;
+package com.banheiro;
 
 public class Festa {
     public static void main(String[] args) {

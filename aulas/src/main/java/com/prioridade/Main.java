@@ -1,4 +1,4 @@
-package com.aulas.prioridade;
+package com.prioridade;
 
 public class Main {
     public static void main(String[] args) {

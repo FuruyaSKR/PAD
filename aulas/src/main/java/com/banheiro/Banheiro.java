@@ -1,4 +1,4 @@
-package com.aulas.banheiro;
+package com.banheiro;
 
 public class Banheiro {
     private boolean ocupado = false;

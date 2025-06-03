@@ -1,4 +1,4 @@
-package main.java.com.aulas.prioridade;
+package com.prioridade;
 
 public class AltaPrioridade extends Thread {
     public void run() {

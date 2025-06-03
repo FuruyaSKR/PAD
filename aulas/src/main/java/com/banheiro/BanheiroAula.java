@@ -1,4 +1,4 @@
-package com.aulas.banheiro;
+package com.banheiro;
 
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.Lock;

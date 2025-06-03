@@ -1,4 +1,4 @@
-package com.aulas.Notify;
+package com.Notify;
 
 public class Message {
     private String msg;

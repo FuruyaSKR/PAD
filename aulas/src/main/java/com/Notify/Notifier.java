@@ -1,4 +1,4 @@
-package com.aulas.Notify;
+package com.Notify;
 
 public class Notifier implements Runnable {
     private Message msg;

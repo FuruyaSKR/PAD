@@ -1,4 +1,4 @@
-package com.aulas.threads;
+package com.threads;
 
 import java.util.LinkedList;
 import java.util.Queue;
