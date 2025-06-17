@@ -8,7 +8,7 @@ public class Main {
         final int N_PORCOES_INICIAL = 5;
         final int NUM_SELVAGENS = 10;
         final int NUM_COZINHEIROS = 1;
-        final int TEMPO_EXECUCAO_MS = 10000;
+        final int TEMPO_EXECUCAO_MS = 5000;
 
         List<Thread> todasAsThreads = new ArrayList<>();
         Caldeirao caldeirao = new Caldeirao(N_PORCOES_INICIAL);
