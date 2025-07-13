@@ -5,6 +5,7 @@
 #include "Ordenadores/QuickSort.cpp"
 #include "Ordenadores/BubbleSort.cpp"
 #include "Ordenadores/HeapSort.cpp"
+#include "Ordenadores/BuscaBinaria.hpp"
 
 using namespace std;
 
@@ -65,6 +66,13 @@ int main()
     vector<int> ordenado = ordenador->ordenador(inteiros);
 
     // imprimirVetores(inteiros, ordenado);
+
+    int valorBusca;
+    cout << "Digite o valor para busca binaria: ";
+    cin >> valorBusca;
+
+    executarBuscaBinaria(ordenado, valorBusca, paralelo);
+
 
     delete ordenador;
     return 0;
