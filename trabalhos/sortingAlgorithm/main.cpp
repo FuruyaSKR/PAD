@@ -4,9 +4,20 @@
 #include "Ordenadores/MergeSort.cpp"
 #include "Ordenadores/QuickSort.cpp"
 #include "Ordenadores/BubbleSort.cpp"
-#include "Ordenadores/InsertionSort.cpp"
+#include "Ordenadores/HeapSort.cpp"
 
 using namespace std;
+
+void imprimirVetores(const vector<int>& original, const vector<int>& ordenado)
+{
+    cout << "Vetor gerado: ";
+    for (int num : original) cout << num << " ";
+    cout << endl;
+
+    cout << "Vetor ordenado: ";
+    for (int num : ordenado) cout << num << " ";
+    cout << endl;
+}
 
 int main()
 {
@@ -14,7 +25,7 @@ int main()
     cout << "1 - MergeSort\n";
     cout << "2 - QuickSort\n";
     cout << "3 - BubbleSort\n";
-    cout << "4 - InsertionSort\n";
+    cout << "4 - HeapSort\n";
     int algoritmo;
     cin >> algoritmo;
 
@@ -36,7 +47,7 @@ int main()
             ordenador = new BubbleSort(paralelo);
             break;
         case 4:
-            ordenador = new InsertionSort(paralelo);
+            ordenador = new HeapSort(paralelo);
             break;
         default:
             cout << "Opcao invalida." << endl;
@@ -51,15 +62,9 @@ int main()
         inteiros[i] = rand() % SIZE; 
     }
 
-    // cout << "Vetor gerado: ";
-    // for (int num : inteiros) cout << num << " ";
-    // cout << endl;
-
     vector<int> ordenado = ordenador->ordenador(inteiros);
 
-    // cout << "Vetor ordenado: ";
-    // for (auto v : ordenado) cout << v << " ";
-    // cout << endl;
+    // imprimirVetores(inteiros, ordenado);
 
     delete ordenador;
     return 0;
