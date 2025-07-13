@@ -62,12 +62,13 @@ private:
     }
 
     void mergeSortParalelo(vector<int>& arr, int left, int right)
-    {
-        if (left >= right)
-            return;
+{
+    if (left >= right)
+        return;
 
-        int mid = left + (right - left) / 2;
+    int mid = left + (right - left) / 2;
 
+    if ((right - left) > 10000) { 
         #pragma omp parallel sections
         {
             #pragma omp section
@@ -76,9 +77,13 @@ private:
             #pragma omp section
             mergeSortParalelo(arr, mid + 1, right);
         }
-
-        merge(arr, left, mid, right);
+    } else {
+        mergeSortSerial(arr, left, mid);
+        mergeSortSerial(arr, mid + 1, right);
     }
+
+    merge(arr, left, mid, right);
+}
 
 public:
     MergeSort(bool paralelo = false)
@@ -87,41 +92,36 @@ public:
     }
 
     vector<int> ordenador(vector<int> valores) override
-    {
-        clock_t start = clock();
+{
+    if (paralelo) {
+        const int numThreads[] = {1, 2, 4, 8, 12};
+        int n = valores.size();
 
-        if (paralelo) {
-            const int numThreads[] = {1, 2, 4, 8, 12};
-            int n = valores.size();
+        for (int i = 0; i < 5; i++) {
+            vector<int> copia = valores;
+            int numThread = numThreads[i];
+            omp_set_num_threads(numThread);
 
-            for (int i = 0; i < 5; i++) {
-                vector<int> copia = valores;
-                int numThread = numThreads[i];
-                omp_set_num_threads(numThread);
+            double tStart = omp_get_wtime();
+            mergeSortParalelo(copia, 0, n - 1);
+            double tEnd = omp_get_wtime();
 
-                clock_t tStart = clock();
-                mergeSortParalelo(copia, 0, n - 1);
-                clock_t tEnd = clock();
-
-                double tempo = 1000.0 * (tEnd - tStart) / CLOCKS_PER_SEC;
-                printf("Teste com %d Threads: %.2f ms\n", numThread, tempo);
-            }
-
-            int numThreadFinal = 4;
-            omp_set_num_threads(numThreadFinal);
-            mergeSortParalelo(valores, 0, valores.size() - 1);
-
-            clock_t end = clock();
-            double tempo = 1000.0 * (end - start) / CLOCKS_PER_SEC;
-            printf("Tempo Final (paralelo, %d threads): %.2f ms\n", numThreadFinal, tempo);
-        } else {
-            mergeSortSerial(valores, 0, valores.size() - 1);
-
-            clock_t end = clock();
-            double tempo = 1000.0 * (end - start) / CLOCKS_PER_SEC;
-            printf("Tempo Serial: %.2f ms\n", tempo);
+            double tempo = 1000.0 * (tEnd - tStart); 
+            printf("Threads: %d | Tempo: %.4f ms\n", numThread, tempo);
         }
 
-        return valores;
+        omp_set_num_threads(omp_get_max_threads());
+        mergeSortParalelo(valores, 0, valores.size() - 1);
+
+    } else {
+        double tStart = omp_get_wtime();
+        mergeSortSerial(valores, 0, valores.size() - 1);
+        double tEnd = omp_get_wtime();
+
+        double tempo = 1000.0 * (tEnd - tStart);
+        printf("Serial | Tempo: %.2f ms\n", tempo);
     }
+
+    return valores; 
+}
 };

@@ -8,29 +8,6 @@
 
 using namespace std;
 
-// Classe auxiliar para pesquisa binária
-class PesquisaBinaria {
-public:
-    int buscar(vector<int>& arr, int valor) {
-        int esquerda = 0;
-        int direita = arr.size() - 1;
-
-        while (esquerda <= direita) {
-            int meio = esquerda + (direita - esquerda) / 2;
-
-            if (arr[meio] == valor)
-                return meio;
-
-            if (arr[meio] < valor)
-                esquerda = meio + 1;
-            else
-                direita = meio - 1;
-        }
-
-        return -1; // Não encontrado
-    }
-};
-
 int main()
 {
     cout << "Selecione o algoritmo:\n";
@@ -66,43 +43,23 @@ int main()
             return 1;
     }
 
-    const int SIZE = 20;
+    const int SIZE = 100000;
     vector<int> inteiros(SIZE);
 
     srand(time(NULL));
     for (int i = 0; i < SIZE; i++) {
-        inteiros[i] = rand() % 100; 
+        inteiros[i] = rand() % SIZE; 
     }
 
-    cout << "Vetor gerado: ";
-    for (int num : inteiros) cout << num << " ";
-    cout << endl;
+    // cout << "Vetor gerado: ";
+    // for (int num : inteiros) cout << num << " ";
+    // cout << endl;
 
     vector<int> ordenado = ordenador->ordenador(inteiros);
 
-    cout << "Vetor ordenado: ";
-    for (int num : ordenado) cout << num << " ";
-    cout << endl;
-
-    // Pesquisa binária após ordenar
-    PesquisaBinaria pb;
-    cout << "Digite o valor para buscar com pesquisa binaria: ";
-    int valorBusca;
-    cin >> valorBusca;
-
-    clock_t startBusca = clock();
-    int resultado = pb.buscar(ordenado, valorBusca);
-    clock_t endBusca = clock();
-
-    double tempoBusca = 1000.0 * (endBusca - startBusca) / CLOCKS_PER_SEC;
-
-    if (resultado != -1) {
-        cout << "Valor " << valorBusca << " encontrado na posicao " << resultado << endl;
-    } else {
-        cout << "Valor " << valorBusca << " nao encontrado." << endl;
-    }
-    printf("Tempo da Pesquisa Binaria: %.4f ms\n", tempoBusca);
-
+    // cout << "Vetor ordenado: ";
+    // for (auto v : ordenado) cout << v << " ";
+    // cout << endl;
 
     delete ordenador;
     return 0;
