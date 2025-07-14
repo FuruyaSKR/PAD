@@ -3,7 +3,7 @@
 #include <ctime>
 #include "Ordenadores/MergeSort.cpp"
 #include "Ordenadores/QuickSort.cpp"
-#include "Ordenadores/BubbleSort.cpp"
+#include "Ordenadores/TimSort.cpp"
 #include "Ordenadores/HeapSort.cpp"
 #include "Ordenadores/BuscaBinaria.hpp"
 
@@ -25,7 +25,7 @@ int main()
     cout << "Selecione o algoritmo:\n";
     cout << "1 - MergeSort\n";
     cout << "2 - QuickSort\n";
-    cout << "3 - BubbleSort\n";
+    cout << "3 - TimSort\n";
     cout << "4 - HeapSort\n";
     int algoritmo;
     cin >> algoritmo;
@@ -45,7 +45,7 @@ int main()
             ordenador = new QuickSort(paralelo);
             break;
         case 3:
-            ordenador = new BubbleSort(paralelo);
+            ordenador = new TimSort(paralelo);
             break;
         case 4:
             ordenador = new HeapSort(paralelo);
